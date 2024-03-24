@@ -1,14 +1,14 @@
 version: "3.8"
 
 networks:
-  hdrc-network:
+  ton-course-network:
     driver: bridge
     ipam:
       config:
         - subnet: 10.5.0.0/16
           gateway: 10.5.0.1
 
-name: ton
+name: ton-course
 services:
   devc:
     # image: mcr.microsoft.com/devcontainers/base:ubuntu
@@ -27,5 +27,5 @@ services:
       - ..:/workspaces:cached
     command: sleep infinity
     networks:
-      hdrc-network:
+      ton-course-network:
         ipv4_address: 10.5.0.2
