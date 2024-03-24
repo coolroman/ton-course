@@ -1,7 +1,7 @@
 import { compileFunc } from "@ton-community/func-js";
+import { Cell } from "@ton/core";
 import * as fs from "fs";
 import process from "process";
-import { Cell } from "ton-core";
 
 async function compileScript() {
   console.log(

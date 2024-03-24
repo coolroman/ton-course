@@ -8,15 +8,15 @@ devDependencies:
   '@ton-community/func-js':
     specifier: ^0.6.3
     version: 0.6.3
+  '@ton/core':
+    specifier: ^0.56.2
+    version: 0.56.2(@ton/crypto@3.2.0)
+  '@ton/crypto':
+    specifier: ^3.2.0
+    version: 3.2.0
   '@types/node':
     specifier: ^20.11.30
     version: 20.11.30
-  ton-core:
-    specifier: ^0.53.0
-    version: 0.53.0(ton-crypto@3.2.0)
-  ton-crypto:
-    specifier: ^3.2.0
-    version: 3.2.0
   tsx:
     specifier: ^4.7.1
     version: 4.7.1
@@ -245,6 +245,29 @@ packages:
       arg: 5.0.2
     dev: true
 
+  /@ton/core@0.56.2(@ton/crypto@3.2.0):
+    resolution: {integrity: sha512-URILQzi7qnVxidcJBRMx8ChS0TKiVRbi0CDe+ZWpVNOQyBpwkcYX+OeRVop3hb3GjtyHnOmoP+EAulSAhkX4rw==}
+    peerDependencies:
+      '@ton/crypto': '>=3.2.0'
+    dependencies:
+      '@ton/crypto': 3.2.0
+      symbol.inspect: 1.0.1
+    dev: true
+
+  /@ton/crypto-primitives@2.0.0:
+    resolution: {integrity: sha512-wttiNClmGbI6Dfy/8oyNnsIV0b/qYkCJz4Gn4eP62lJZzMtVQ94Ko7nikDX1EfYHkLI1xpOitWpW+8ZuG6XtDg==}
+    dependencies:
+      jssha: 3.2.0
+    dev: true
+
+  /@ton/crypto@3.2.0:
+    resolution: {integrity: sha512-50RkwReEuV2FkxSZ8ht/x9+n0ZGtwRKGsJ0ay4I/HFhkYVG/awIIBQeH0W4j8d5lADdO5h01UtX8PJ8AjiejjA==}
+    dependencies:
+      '@ton/crypto-primitives': 2.0.0
+      jssha: 3.2.0
+      tweetnacl: 1.0.3
+    dev: true
+
   /@types/node@20.11.30:
     resolution: {integrity: sha512-dHM6ZxwlmuZaRmUPfv1p+KrdD1Dci04FbdEm/9wEMouFqxYoFl5aMkt0VMAUtYRQDyYvD41WJLukhq/ha3YuTw==}
     dependencies:
@@ -310,29 +333,6 @@ packages:
 
   /symbol.inspect@1.0.1:
     resolution: {integrity: sha512-YQSL4duoHmLhsTD1Pw8RW6TZ5MaTX5rXJnqacJottr2P2LZBF/Yvrc3ku4NUpMOm8aM0KOCqM+UAkMA5HWQCzQ==}
-    dev: true
-
-  /ton-core@0.53.0(ton-crypto@3.2.0):
-    resolution: {integrity: sha512-uO/U1oVLdEliWWbwfNQQK+61C+KM0ehcTdHQ6cN0WSEH2UzGfdVFpC4Wb0ph+wUYe/5njl7TA0uL9nif9Q6qwA==}
-    peerDependencies:
-      ton-crypto: '>=3.2.0'
-    dependencies:
-      symbol.inspect: 1.0.1
-      ton-crypto: 3.2.0
-    dev: true
-
-  /ton-crypto-primitives@2.0.0:
-    resolution: {integrity: sha512-K+qKjpS0h9sPW6oExcpxnzuQ7nEgHEiDKwIqE/jWD25o8iFGe3FWj1gKxFNbKE9wwYKc5IV8FwrU+raF0KO5nQ==}
-    dependencies:
-      jssha: 3.2.0
-    dev: true
-
-  /ton-crypto@3.2.0:
-    resolution: {integrity: sha512-fltdBNQ45gARMuGMEOjPZWPJ5eSql8p3CA0Dj7tPv5lhU5ziT8SxXLAzDraR9HJ8YpjBHLVvYyhMLRiEwxgtMQ==}
-    dependencies:
-      jssha: 3.2.0
-      ton-crypto-primitives: 2.0.0
-      tweetnacl: 1.0.3
     dev: true
 
   /tsx@4.7.1:
