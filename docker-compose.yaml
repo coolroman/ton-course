@@ -1,0 +1,31 @@
+version: "3.8"
+
+networks:
+  hdrc-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+
+name: ton
+services:
+  devc:
+    # image: mcr.microsoft.com/devcontainers/base:ubuntu
+    # profiles: [dev]
+    # environment:
+    # DATABASE_URL: postgres://hdrc:${POSTGRES_PASSWORD}@db:5432/hdrc
+    # ports:
+    #   - 8000:8000
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      # platforms:
+      #   - linux/arm64/v8
+      # - linux/amd64
+    volumes:
+      - ..:/workspaces:cached
+    command: sleep infinity
+    networks:
+      hdrc-network:
+        ipv4_address: 10.5.0.2

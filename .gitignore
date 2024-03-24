@@ -1,0 +1,11 @@
+.DS_Store
+
+.vscode/chrome-user-data-dir
+
+node_modules
+
+build
+
+.env.local*
+.env.launch
+.env.defaults

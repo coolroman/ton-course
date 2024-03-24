@@ -1,0 +1,19 @@
+//devcontainer.json
+{
+  "dockerComposeFile": "../docker-compose.yaml",
+  "service": "devc",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "tonwhales.func-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        "rvest.vs-code-prettier-eslint",
+        "GitLab.gitlab-workflow",
+        "mhutchie.git-graph"
+      ]
+    }
+  },
+  "features": {}
+}

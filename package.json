@@ -1,0 +1,21 @@
+{
+  "name": "ton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsx scripts/test.ts",
+    "compile": "tsx scripts/compile.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@ton-community/func-js": "^0.6.3",
+    "@types/node": "^20.11.30",
+    "ton-core": "^0.53.0",
+    "ton-crypto": "^3.2.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
+  }
+}
