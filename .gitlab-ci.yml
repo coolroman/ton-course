@@ -37,8 +37,7 @@ tests:
   script:
     - pnpm jest --ci --reporters=default --reporters=jest-junit
   artifacts:
-    paths:
-      - junit.xml
-    untracked: false
     when: on_success
-    expire_in: "1 day"
+    reports:
+      junit:
+        - junit.xml
