@@ -1,7 +1,24 @@
 default:
   interruptible: true
 
+.job-template:
+  image: node:lts
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .pnpm-store
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@latest-8 --activate
+    - SHELL="$(which bash)" pnpm setup
+    - source /root/.bashrc
+    - pnpm config set store-dir .pnpm-store
+    - pnpm install
+
 compile:
+  extends: .job-template
   stage: build
   script:
     - pnpm compile
@@ -13,6 +30,7 @@ compile:
     expire_in: "1 day"
 
 tests:
+  extends: .job-template
   stage: test
   needs:
     - compile
