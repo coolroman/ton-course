@@ -13,7 +13,8 @@
         "GitLab.gitlab-workflow",
         "mhutchie.git-graph",
         "Orta.vscode-jest",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "meganrogge.template-string-converter"
       ]
     }
   },
