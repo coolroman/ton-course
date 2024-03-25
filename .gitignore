@@ -9,3 +9,5 @@ build
 .env.local*
 .env.launch
 .env.defaults
+
+junit.xml

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsx scripts/compile.ts"
+    "compile": "tsx scripts/compile.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "ton": "^13.9.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",

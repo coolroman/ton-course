@@ -12,7 +12,8 @@
         "rvest.vs-code-prettier-eslint",
         "GitLab.gitlab-workflow",
         "mhutchie.git-graph",
-        "vitest.explorer"
+        "Orta.vscode-jest",
+        "redhat.vscode-yaml"
       ]
     }
   },
