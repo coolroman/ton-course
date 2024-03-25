@@ -6,13 +6,15 @@
   "scripts": {
     "test": "jest",
     "compile": "tsx scripts/compile.ts",
-    "deploy": "tsx scripts/deploy.ts"
+    "deploy": "tsx scripts/deploy.ts",
+    "onchaintest": "tsx scripts/onchaintest.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@orbs-network/ton-access": "^2.3.3",
     "@ton-community/func-js": "^0.6.3",
     "@ton/core": "^0.56.2",
     "@ton/crypto": "^3.2.0",
