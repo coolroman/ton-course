@@ -40,11 +40,11 @@ RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install
 ENV PATH="/home/node/.nvm/versions/node/v$NODE_VERSION/bin:$PATH"
 
 # pnpm
-RUN corepack enable
-RUN corepack prepare pnpm@latest-8 --activate
-RUN SHELL="$(which bash)" pnpm setup
-RUN source ~/.bashrc
-RUN pnpm config set store-dir $HOME/.pnpm-store
+RUN corepack enable \
+  && corepack prepare pnpm@latest-8 --activate \
+  && SHELL="$(which bash)" pnpm setup \
+  && source ~/.bashrc \
+  && pnpm config set store-dir $HOME/.pnpm-store
 
 # oh-my-zsh
 # RUN wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
