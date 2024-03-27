@@ -9,6 +9,18 @@ import {
   SendMode,
 } from "@ton/core";
 
+export type MainContractConfig = {
+  number: number;
+  address: Address;
+};
+
+export function mainContractConfigToCell(config: MainContractConfig): Cell {
+  return beginCell()
+    .storeUint(config.number, 32)
+    .storeAddress(config.address)
+    .endCell();
+}
+
 export class MainContract implements Contract {
   constructor(
     readonly address: Address,
@@ -16,35 +28,34 @@ export class MainContract implements Contract {
   ) {}
 
   static createFromConfig(
-    _config: Record<string, unknown>,
+    config: MainContractConfig,
     code: Cell,
     workchain = 0
   ) {
-    const data = beginCell().endCell();
+    const data = mainContractConfigToCell(config);
     const init = { code, data };
     const address = contractAddress(workchain, init);
     return new MainContract(address, init);
   }
 
-  async sendInternalMessage(
+  async sendIncrement(
     provider: ContractProvider,
     sender: Sender,
     value: bigint,
-    total: number
+    incerement_by: number
   ) {
     await provider.internal(sender, {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
-      body: beginCell().storeUint(total, 32).endCell(),
+      body: beginCell().storeUint(1, 32).storeUint(incerement_by, 32).endCell(),
     });
   }
 
   async getData(provider: ContractProvider) {
-    const { stack } = await provider.get("get_the_latest_sender", []);
-    const { stack: stack2 } = await provider.get("get_sum", []);
+    const { stack } = await provider.get("get_contract_storage_data", []);
     return {
+      counter: stack.readNumber(),
       recent_sender_address: stack.readAddress(),
-      total: stack2.readNumber(),
     };
   }
 }
