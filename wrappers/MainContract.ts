@@ -56,6 +56,7 @@ export class MainContract implements Contract {
     return {
       counter: stack.readNumber(),
       recent_sender_address: stack.readAddress(),
+      owner_address: stack.readAddress(),
     };
   }
 }
