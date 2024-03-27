@@ -1,9 +1,12 @@
 import { getHttpV4Endpoint } from "@orbs-network/ton-access";
 import { Address, Cell, contractAddress } from "@ton/core";
-import qrcode from "qrcode-terminal";
-import qs from "qs";
-import { toNano, TonClient4 } from "ton";
+import { TonClient4 } from "ton";
 import { hex } from "../build/main.compiled.json";
+
+import dotenvFlow from "dotenv-flow";
+dotenvFlow.config();
+
+const MAINNET = !!process.env.MAINNET;
 
 async function onchainTestScript() {
   const codeCell = Cell.fromBoc(Buffer.from(hex, "hex"))[0];
@@ -14,8 +17,10 @@ async function onchainTestScript() {
     data: dataCell,
   });
 
+  console.log(`NET: "${MAINNET ? "mainnet" : "testnet"}"`);
+
   const endpoint = await getHttpV4Endpoint({
-    network: "testnet",
+    network: MAINNET ? "mainnet" : "testnet",
   });
 
   const client4 = new TonClient4({ endpoint });
@@ -28,18 +33,18 @@ async function onchainTestScript() {
     return;
   }
 
-  console.log(status.account.balance.coins);
+  // const link = `https://${
+  //   MAINNET ? "" : "test."
+  // }tonhub.com/transfer/${address.toString({
+  //   testOnly: !MAINNET,
+  // })}?${qs.stringify({
+  //   text: "Deploy contract",
+  //   amount: toNano("0.01").toString(10),
+  // })}`;
 
-  const link = `https://test.tonhub.com/transfer/${address.toString({
-    testOnly: true,
-  })}?${qs.stringify({
-    text: "Deploy contract",
-    amount: toNano("0.01").toString(10),
-  })}`;
-
-  qrcode.generate(link, { small: true }, (code) => {
-    console.log(code);
-  });
+  // qrcode.generate(link, { small: true }, (code) => {
+  //   console.log(code);
+  // });
 
   let recent_sender_archive: Address;
 

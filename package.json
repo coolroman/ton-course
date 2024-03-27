@@ -6,8 +6,10 @@
   "scripts": {
     "test": "jest",
     "compile": "tsx scripts/compile.ts",
-    "deploy": "tsx scripts/deploy.ts",
-    "onchaintest": "tsx scripts/onchaintest.ts"
+    "deploy": "pnpm compile && tsx scripts/deploy.ts",
+    "deploy:mainnet": "pnpm compile && NODE_ENV=production tsx scripts/deploy.ts",
+    "onchaintest": "tsx scripts/onchaintest.ts",
+    "onchaintest:mainnet": "NODE_ENV=production tsx scripts/onchaintest.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "@types/node": "^20.11.30",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/qs": "^6.9.14",
+    "dotenv-flow": "^4.1.0",
     "jest": "^29.7.0",
     "jest-junit": "^16.0.0",
     "qrcode-terminal": "^0.12.0",

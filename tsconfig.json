@@ -16,7 +16,8 @@
     "isolatedModules": true,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "target": "esnext"
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["scripts/**/*"]
+  "include": ["scripts/**/*", "wrappers/**/*", "types/**/*"]
 }

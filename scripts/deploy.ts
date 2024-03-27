@@ -10,6 +10,11 @@ import qrcode from "qrcode-terminal";
 import qs from "qs";
 import { hex } from "../build/main.compiled.json";
 
+import dotenvFlow from "dotenv-flow";
+dotenvFlow.config({ debug: true });
+
+const MAINNET = !!process.env.MAINNET;
+
 async function deployScript() {
   const codeCell = Cell.fromBoc(Buffer.from(hex, "hex"))[0];
   const dataCell = new Cell();
@@ -26,13 +31,17 @@ async function deployScript() {
   const address = contractAddress(0, stateInit);
 
   console.log(`Address: ${address.toString()}`);
-  console.log("Scan the qrcode below:");
+  console.log(
+    `Scan the qrcode below to deploy to "${MAINNET ? "mainnet" : "testnet"}"`
+  );
 
-  const link = `https://test.tonhub.com/transfer/${address.toString({
-    testOnly: true,
+  const link = `https://${
+    MAINNET ? "" : "test."
+  }tonhub.com/transfer/${address.toString({
+    testOnly: !MAINNET,
   })}?${qs.stringify({
     text: "Deploy contract",
-    amount: toNano("0.123").toString(10),
+    amount: toNano("0.01").toString(10),
     init: stateInitCell.toBoc({ idx: false }).toString("base64"),
   })}`;
 
