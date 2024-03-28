@@ -20,9 +20,13 @@ const const::min_tons_for_storage = 10000000; ;; 0.01 TON
 }
 
 () recv_internal(int msg_value, cell in_msg, slice in_msg_body) impure {
+  slice cs = in_msg.begin_parse();
+  int flags = cs~load_uint(4);
+  slice sender_address = cs~load_msg_addr();
+
   int op = in_msg_body~load_uint(32);
 
-  var (counter_value, sender_address, owner_address) = load_data();
+  var (counter_value, recent_sender_address, owner_address) = load_data();
 
   if (op == 1) {
     int increment_by = in_msg_body~load_uint(32);
