@@ -21,7 +21,7 @@ compile:
   extends: .job-template
   stage: build
   script:
-    - pnpm compile
+    - pnpm blueprint build
   artifacts:
     paths:
       - build
