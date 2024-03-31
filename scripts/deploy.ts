@@ -6,7 +6,7 @@ export async function run(provider: NetworkProvider) {
   const addr =
     provider.network() === "mainnet"
       ? "EQC20U11vtwT98AeLZhq0npsBwTTRUlmmQ1mAjFetaMIitt_"
-      : "0QC20U11vtwT98AeLZhq0npsBwTTRUlmmQ1mAjFetaMIij0w";
+      : "0QDvhAx7S9U54AL0KnQwkNQXsyySitEEptwVK80WqPFLvgx6";
   console.log(`${provider.network()}: ${addr}`);
   const myContract = MainContract.createFromConfig(
     {
