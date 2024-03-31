@@ -94,6 +94,18 @@ export class MainContract implements Contract {
     });
   }
 
+  async sendDestroyRequest(
+    provider: ContractProvider,
+    sender: Sender,
+    value: bigint
+  ) {
+    await provider.internal(sender, {
+      value,
+      sendMode: SendMode.PAY_GAS_SEPARATELY,
+      body: beginCell().storeUint(4, 32).endCell(),
+    });
+  }
+
   async getData(provider: ContractProvider) {
     const { stack } = await provider.get("get_contract_storage_data", []);
     return {
@@ -108,5 +120,10 @@ export class MainContract implements Contract {
     return {
       balance: stack.readNumber(),
     };
+  }
+
+  async getContractState(provider: ContractProvider) {
+    const st = await provider.getState();
+    return st;
   }
 }

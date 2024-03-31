@@ -188,4 +188,36 @@ describe("main.fc contract tests", () => {
 
     expect(data.counter).toEqual(4);
   });
+
+  it("destroy wallet", async () => {
+    const senderWallet = await blockchain.treasury("sender");
+
+    const depositMessageResult = await myContract.sendDeposit(
+      senderWallet.getSender(),
+      toNano("5")
+    );
+
+    const stateRequest = await myContract.getContractState();
+
+    expect(stateRequest.state.type).toEqual("active");
+
+    const balanceRequest = await myContract.getBalance();
+
+    expect(balanceRequest.balance).toBeGreaterThan(4.99);
+
+    const destroyMessageResult = await myContract.sendDestroyRequest(
+      senderWallet.getSender(),
+      toNano("5")
+    );
+
+    expect(destroyMessageResult.transactions).toHaveTransaction({
+      from: senderWallet.address,
+      to: myContract.address,
+      success: true,
+    });
+
+    const stateRequest2 = await myContract.getContractState();
+
+    expect(stateRequest2.state.type).toEqual("uninit");
+  });
 });
