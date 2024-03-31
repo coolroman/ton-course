@@ -1,7 +1,7 @@
 import { getHttpV4Endpoint } from "@orbs-network/ton-access";
 import { Address, Cell, contractAddress } from "@ton/core";
 import { TonClient4 } from "ton";
-import { hex } from "../build/main.compiled.json";
+import { hex } from "../../build/MainContract.compiled.json";
 
 import dotenvFlow from "dotenv-flow";
 dotenvFlow.config();

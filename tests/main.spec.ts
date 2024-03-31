@@ -1,8 +1,8 @@
 import { describe, test } from "@jest/globals";
+import { compile } from "@ton/blueprint";
 import { Cell, toNano } from "@ton/core";
 import { Blockchain, SandboxContract, TreasuryContract } from "@ton/sandbox";
 import "@ton/test-utils";
-import { hex } from "../build/main.compiled.json";
 import { MainContract } from "../wrappers/MainContract";
 
 describe("main.fc contract tests", () => {
@@ -10,13 +10,16 @@ describe("main.fc contract tests", () => {
   let myContract: SandboxContract<MainContract>;
   let initWallet: SandboxContract<TreasuryContract>;
   let ownerWallet: SandboxContract<TreasuryContract>;
+  let codeCell: Cell;
+
+  beforeAll(async () => {
+    codeCell = await compile("MainContract");
+  });
 
   beforeEach(async () => {
     blockchain = await Blockchain.create();
     initWallet = await blockchain.treasury("initWallet");
     ownerWallet = await blockchain.treasury("ownerWallet");
-
-    const codeCell = Cell.fromBoc(Buffer.from(hex, "hex"))[0];
 
     myContract = blockchain.openContract(
       MainContract.createFromConfig(
@@ -148,5 +151,41 @@ describe("main.fc contract tests", () => {
       success: false,
       exitCode: 104,
     });
+  });
+
+  it("sends two messages with numbers 1 and 2 and checks sum after each", async () => {
+    const senderWallet = await blockchain.treasury("sender");
+
+    let sentMessageResult = await myContract.sendIncrement(
+      senderWallet.getSender(),
+      toNano("0.01"),
+      1
+    );
+
+    expect(sentMessageResult.transactions).toHaveTransaction({
+      from: senderWallet.address,
+      to: myContract.address,
+      success: true,
+    });
+
+    let data = await myContract.getData();
+
+    expect(data.counter).toEqual(2);
+
+    sentMessageResult = await myContract.sendIncrement(
+      senderWallet.getSender(),
+      toNano("0.01"),
+      2
+    );
+
+    expect(sentMessageResult.transactions).toHaveTransaction({
+      from: senderWallet.address,
+      to: myContract.address,
+      success: true,
+    });
+
+    data = await myContract.getData();
+
+    expect(data.counter).toEqual(4);
   });
 });

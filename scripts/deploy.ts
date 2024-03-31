@@ -1,53 +1,25 @@
-import {
-  beginCell,
-  Cell,
-  contractAddress,
-  StateInit,
-  storeStateInit,
-  toNano,
-} from "@ton/core";
-import qrcode from "qrcode-terminal";
-import qs from "qs";
-import { hex } from "../build/main.compiled.json";
+import { NetworkProvider, compile } from "@ton/blueprint";
+import { address, toNano } from "@ton/core";
+import { MainContract } from "../wrappers/MainContract";
 
-import dotenvFlow from "dotenv-flow";
-dotenvFlow.config({ debug: true });
-
-const MAINNET = !!process.env.MAINNET;
-
-async function deployScript() {
-  const codeCell = Cell.fromBoc(Buffer.from(hex, "hex"))[0];
-  const dataCell = new Cell();
-
-  const stateInit = {
-    code: codeCell,
-    data: dataCell,
-  } satisfies StateInit;
-
-  const stateInitBuilder = beginCell();
-  storeStateInit(stateInit)(stateInitBuilder);
-  const stateInitCell = stateInitBuilder.endCell();
-
-  const address = contractAddress(0, stateInit);
-
-  console.log(`Address: ${address.toString()}`);
-  console.log(
-    `Scan the qrcode below to deploy to "${MAINNET ? "mainnet" : "testnet"}"`
+export async function run(provider: NetworkProvider) {
+  const addr =
+    provider.network() === "mainnet"
+      ? "EQC20U11vtwT98AeLZhq0npsBwTTRUlmmQ1mAjFetaMIitt_"
+      : "0QC20U11vtwT98AeLZhq0npsBwTTRUlmmQ1mAjFetaMIij0w";
+  console.log(`${provider.network()}: ${addr}`);
+  const myContract = MainContract.createFromConfig(
+    {
+      number: 0,
+      address: address(addr),
+      owner_addres: address(addr),
+    },
+    await compile("MainContract")
   );
 
-  const link = `https://${
-    MAINNET ? "" : "test."
-  }tonhub.com/transfer/${address.toString({
-    testOnly: !MAINNET,
-  })}?${qs.stringify({
-    text: "Deploy contract",
-    amount: toNano("0.01").toString(10),
-    init: stateInitCell.toBoc({ idx: false }).toString("base64"),
-  })}`;
+  const openedContract = provider.open(myContract);
 
-  qrcode.generate(link, { small: true }, (code) => {
-    console.log(code);
-  });
+  openedContract.sendDeploy(provider.sender(), toNano("0.01"));
+
+  await provider.waitForDeploy(myContract.address);
 }
-
-deployScript();

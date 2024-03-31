@@ -4,12 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "compile": "tsx scripts/compile.ts",
-    "deploy": "pnpm compile && tsx scripts/deploy.ts",
-    "deploy:mainnet": "pnpm compile && NODE_ENV=production tsx scripts/deploy.ts",
-    "onchaintest": "tsx scripts/onchaintest.ts",
-    "onchaintest:mainnet": "NODE_ENV=production tsx scripts/onchaintest.ts"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -17,13 +12,14 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@orbs-network/ton-access": "^2.3.3",
-    "@ton-community/func-js": "^0.6.3",
-    "@ton/core": "^0.56.2",
+    "@ton-community/func-js": "^0.7.0",
+    "@ton/blueprint": "^0.19.0",
+    "@ton/core": "^0.56.3",
     "@ton/crypto": "^3.2.0",
-    "@ton/sandbox": "^0.16.0",
+    "@ton/sandbox": "^0.17.0",
     "@ton/test-utils": "^0.4.2",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.2",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/qs": "^6.9.14",
     "dotenv-flow": "^4.1.0",
@@ -34,7 +30,6 @@
     "ton": "^13.9.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   }
 }

@@ -1,23 +1,13 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
+    "target": "ES2020",
+    "outDir": "dist",
+    "module": "commonjs",
+    "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
-    "allowImportingTsExtensions": true,
-    "allowSyntheticDefaultImports": true,
-    "noEmit": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "isolatedModules": true,
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
-    "target": "esnext",
-    "typeRoots": ["./node_modules/@types", "./types"]
-  },
-  "include": ["scripts/**/*", "wrappers/**/*", "types/**/*"]
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  }
 }
