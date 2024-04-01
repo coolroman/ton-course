@@ -14,7 +14,8 @@
         "mhutchie.git-graph",
         "Orta.vscode-jest",
         "redhat.vscode-yaml",
-        "meganrogge.template-string-converter"
+        "meganrogge.template-string-converter",
+        "vitest.explorer"
       ]
     }
   },

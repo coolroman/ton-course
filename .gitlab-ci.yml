@@ -42,4 +42,18 @@ contract-tests:
     when: on_success
     reports:
       junit:
-        - junit.xml
+        - contract/junit.xml
+
+web-tests:
+  extends: .job-template
+  stage: test
+  # needs:
+  #   - contract-compile
+  script:
+    - cd web
+    - pnpm vitest run --reporter=junit > junit.xml
+  artifacts:
+    when: on_success
+    reports:
+      junit:
+        - web/junit.xml

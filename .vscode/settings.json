@@ -1,3 +1,6 @@
 {
-  "jest.rootPath": "contract"
+  "jest.rootPath": "contract",
+
+  "vitest.enable": true,
+  "vitest.disabledWorkspaceFolders": ["contract"]
 }
