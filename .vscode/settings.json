@@ -2,5 +2,6 @@
   "jest.rootPath": "contract",
 
   "vitest.enable": true,
-  "vitest.disabledWorkspaceFolders": ["contract"]
+  "vitest.disabledWorkspaceFolders": ["contract"],
+  "vitest.watchOnStartup": true
 }
