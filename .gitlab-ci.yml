@@ -17,10 +17,11 @@ default:
     - pnpm config set store-dir .pnpm-store
     - pnpm install
 
-compile:
+contract-compile:
   extends: .job-template
   stage: build
   script:
+    - cd contract
     - pnpm blueprint build
   artifacts:
     paths:
@@ -29,12 +30,13 @@ compile:
     when: on_success
     expire_in: "1 day"
 
-tests:
+contract-tests:
   extends: .job-template
   stage: test
   needs:
     - compile
   script:
+    - cd contract
     - pnpm jest --ci --reporters=default --reporters=jest-junit
   artifacts:
     when: on_success
