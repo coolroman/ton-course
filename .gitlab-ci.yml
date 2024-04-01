@@ -34,7 +34,7 @@ contract-tests:
   extends: .job-template
   stage: test
   needs:
-    - compile
+    - contract-compile
   script:
     - cd contract
     - pnpm jest --ci --reporters=default --reporters=jest-junit
