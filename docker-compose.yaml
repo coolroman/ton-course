@@ -15,8 +15,8 @@ services:
     # profiles: [dev]
     # environment:
     # DATABASE_URL: postgres://hdrc:${POSTGRES_PASSWORD}@db:5432/hdrc
-    # ports:
-    #   - 8000:8000
+    ports:
+      - 5173:5173
     build:
       context: .
       dockerfile: Dockerfile.dev
