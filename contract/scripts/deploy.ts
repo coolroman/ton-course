@@ -1,12 +1,10 @@
 import { NetworkProvider, compile } from "@ton/blueprint";
 import { address, toNano } from "@ton/core";
-import { MainContract } from "../wrappers/MainContract";
+import { MainContract } from "../../common/contracts/MainContract";
+import { get_contract } from "../../common/contracts/env";
 
 export async function run(provider: NetworkProvider) {
-  const addr =
-    provider.network() === "mainnet"
-      ? "EQC20U11vtwT98AeLZhq0npsBwTTRUlmmQ1mAjFetaMIitt_"
-      : "0QDvhAx7S9U54AL0KnQwkNQXsyySitEEptwVK80WqPFLvgx6";
+  const addr = get_contract(provider.network());
   console.log(`${provider.network()}: ${addr}`);
   const myContract = MainContract.createFromConfig(
     {
@@ -19,7 +17,7 @@ export async function run(provider: NetworkProvider) {
 
   const openedContract = provider.open(myContract);
 
-  openedContract.sendDeploy(provider.sender(), toNano("0.01"));
+  openedContract.sendDeploy(provider.sender(), toNano("0.11"));
 
   await provider.waitForDeploy(myContract.address);
 }

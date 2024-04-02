@@ -3,7 +3,7 @@ import { compile } from "@ton/blueprint";
 import { Cell, toNano } from "@ton/core";
 import { Blockchain, SandboxContract, TreasuryContract } from "@ton/sandbox";
 import "@ton/test-utils";
-import { MainContract } from "../wrappers/MainContract";
+import { MainContract } from "../../common/contracts/MainContract";
 
 describe("main.fc contract tests", () => {
   let blockchain: Blockchain;
@@ -50,10 +50,8 @@ describe("main.fc contract tests", () => {
 
     const data = await myContract.getData();
 
-    expect(data.recent_sender_address.toString()).toBe(
-      senderWallet.address.toString()
-    );
-    expect(data.counter).toBe(3);
+    expect(data.recent_sender.toString()).toBe(senderWallet.address.toString());
+    expect(data.number).toBe(3);
   });
 
   it("successfully deposits funds", async () => {
@@ -170,7 +168,7 @@ describe("main.fc contract tests", () => {
 
     let data = await myContract.getData();
 
-    expect(data.counter).toEqual(2);
+    expect(data.number).toEqual(2);
 
     sentMessageResult = await myContract.sendIncrement(
       senderWallet.getSender(),
@@ -186,7 +184,7 @@ describe("main.fc contract tests", () => {
 
     data = await myContract.getData();
 
-    expect(data.counter).toEqual(4);
+    expect(data.number).toEqual(4);
   });
 
   it("destroy wallet", async () => {

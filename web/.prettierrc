@@ -1,0 +1,13 @@
+{
+  "useTabs": false,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": ".devcontainer/devcontainer.json",
+      "options": { "trailingComma": "none" }
+    }
+  ]
+}

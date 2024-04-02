@@ -109,8 +109,8 @@ export class MainContract implements Contract {
   async getData(provider: ContractProvider) {
     const { stack } = await provider.get("get_contract_storage_data", []);
     return {
-      counter: stack.readNumber(),
-      recent_sender_address: stack.readAddress(),
+      number: stack.readNumber(),
+      recent_sender: stack.readAddress(),
       owner_address: stack.readAddress(),
     };
   }

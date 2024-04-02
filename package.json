@@ -4,6 +4,7 @@
     "web"
   ],
   "dependencies": {
+    "@ton/core": "^0.56.3",
     "vitest": "^1.4.0"
   }
 }
