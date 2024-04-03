@@ -6,39 +6,55 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 20
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Test contract
+        working-directory: contract
+        run: pnpm jest --ci --reporters=default --reporters=jest-junit
+
+      - name: Test web
+        working-directory: web
+        run: pnpm vitest run --reporter=junit > junit.xml
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
       - name: Build project
         working-directory: web
@@ -48,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./web/dist
 
   deploy:
     name: Deploy
@@ -61,10 +77,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: production-files
-          path: ./dist
+          path: ./web/dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./web/dist
