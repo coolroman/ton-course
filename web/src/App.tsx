@@ -67,9 +67,9 @@ function App() {
           <>
             <button onClick={() => sendIncrement()}>Increment by 5</button>
             <br />
-            <button onClick={() => sendDeposit()}>deposit 1</button>
+            <button onClick={() => sendDeposit()}>Deposit 1</button>
             <button onClick={() => sendWithdrawalRequest()}>
-              withdraw 0.7
+              Withdraw 0.7
             </button>
             <br />
             <button onClick={() => destroyContract()}>Destroy contract</button>
