@@ -86,6 +86,9 @@ importers:
       '@tonconnect/ui-react':
         specifier: ^2.0.0
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@twa-dev/sdk':
+        specifier: ^7.0.0
+        version: 7.0.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -96,6 +99,9 @@ importers:
         specifier: ^0.21.0
         version: 0.21.0(vite@5.2.7)
     devDependencies:
+      '@twa-dev/types':
+        specifier: ^7.0.0
+        version: 7.0.0
       '@types/react':
         specifier: ^18.2.73
         version: 18.2.73
@@ -1568,6 +1574,18 @@ packages:
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
+
+  /@twa-dev/sdk@7.0.0(react@18.2.0):
+    resolution: {integrity: sha512-OZvqGGrdrgE0xU/IGjvsGKKouia5bTu6rA/BOOU6pJYLu776nQJs/HNFl7lwW16RONf1vvPqeV8XximsuzZ9Iw==}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      '@twa-dev/types': 7.0.0
+      react: 18.2.0
+    dev: false
+
+  /@twa-dev/types@7.0.0:
+    resolution: {integrity: sha512-LBnMklxORuXd/ypv9gFKcQVNJkCktkeuU+2V6B5Ww7dcxDCoYBAKkNnIwEQ3cShq+cxTi96jC/CqWhgDMQ7AXQ==}
 
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}

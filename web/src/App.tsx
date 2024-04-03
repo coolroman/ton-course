@@ -1,5 +1,6 @@
 import { fromNano } from "@ton/core";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import WebApp from "@twa-dev/sdk";
 import { get_contract } from "../../common/contracts/env";
 import "./App.css";
 import { useMainContract } from "./hooks/useMainContract";
@@ -20,12 +21,17 @@ function App() {
 
   const { connected } = useTonConnect();
 
+  const showAlert = () => {
+    WebApp.showAlert("Hey!");
+  };
+
   return (
     <div className="p-4">
       <div className="mb-2 flex justify-center">
         <TonConnectButton />
       </div>
-      <div>
+      <div className="text-center">
+        <button onClick={() => showAlert()}>{WebApp.platform}</button>
         <table className="w-[90%] table-fixed text-left">
           <thead>
             <tr>
