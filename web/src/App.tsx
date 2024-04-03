@@ -21,17 +21,16 @@ function App() {
 
   const { connected } = useTonConnect();
 
-  const showAlert = () => {
-    WebApp.showAlert("Hey!");
-  };
-
   return (
     <div className="p-4">
       <div className="mb-2 flex justify-center">
         <TonConnectButton />
       </div>
       <div className="text-center">
-        <button onClick={() => showAlert()}>{WebApp.platform}</button>
+        <button onClick={() => WebApp.showAlert("Hey there!")}>
+          {WebApp.platform ?? "Unknown"}
+        </button>
+        <button onClick={() => WebApp.sendData("test")}>Send data</button>
         <table className="w-[90%] table-fixed text-left">
           <thead>
             <tr>

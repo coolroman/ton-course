@@ -35,7 +35,7 @@ const const::min_tons_for_storage = 10000000; ;; 0.01 TON
   }
 
   if (op == 2) {
-    save_data(counter_value, sender_address, owner_address);
+    ;; save_data(counter_value, sender_address, owner_address);
     ;; deposit
     return ();
   }

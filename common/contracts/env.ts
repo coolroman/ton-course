@@ -1,7 +1,7 @@
 export function get_contract(network: "mainnet" | "testnet" | "custom") {
   return network === "mainnet"
     ? "EQDmMCWaxiZvNyfFJk55aH3_emWCMZYZrD7AgkqDWlX-eytv"
-    : "kQCfmubaqTBs_iZITAdCbJcBvFOiHh34VPWXAGC1qHvd4h1g";
+    : "kQCwghD8dd2gT0BqB3JixA0bN7cFUHcAMuktIxBPhYfGY3Pe";
 }
 
 export function get_owner(network: "mainnet" | "testnet" | "custom") {
