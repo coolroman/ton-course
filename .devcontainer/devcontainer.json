@@ -15,7 +15,8 @@
         "Orta.vscode-jest",
         "redhat.vscode-yaml",
         "meganrogge.template-string-converter",
-        "vitest.explorer"
+        "vitest.explorer",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   },
