@@ -204,12 +204,12 @@ describe("main.fc contract tests", () => {
     expect(balanceRequest.balance).toBeGreaterThan(4.99);
 
     const destroyMessageResult = await myContract.sendDestroyRequest(
-      senderWallet.getSender(),
+      ownerWallet.getSender(),
       toNano("5")
     );
 
     expect(destroyMessageResult.transactions).toHaveTransaction({
-      from: senderWallet.address,
+      from: ownerWallet.address,
       to: myContract.address,
       success: true,
     });
