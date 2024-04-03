@@ -39,7 +39,7 @@ jobs:
         if: success() || failure() # run this step even if previous step failed
         with:
           name: Jest Tests # Name of the check run which will be created
-          path: contract/junit.xml # Path to test results
+          path: ./contract/junit.xml # Path to test results
           reporter: jest-junit # Format of test results
 
       - name: Test web
@@ -51,7 +51,7 @@ jobs:
         if: success() || failure() # run this step even if previous step failed
         with:
           name: Vitest Tests # Name of the check run which will be created
-          path: web/junit.xml # Path to test results
+          path: ./web/junit.xml # Path to test results
           reporter: jest-junit # Format of test results
 
   build:
