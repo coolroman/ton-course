@@ -34,9 +34,21 @@ jobs:
         working-directory: contract
         run: pnpm jest --ci --reporters=default --reporters=jest-junit
 
+      - name: Publish contract test results
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: "contract/junit.xml"
+
       - name: Test web
         working-directory: web
         run: pnpm vitest run --reporter=junit > junit.xml
+
+      - name: Publish web test results
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: "web/junit.xml"
 
   build:
     name: Build
