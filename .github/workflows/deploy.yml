@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
   test:
     name: Test
@@ -41,7 +46,7 @@ jobs:
           name: ${{ matrix.dir }}-test-results
           path: ./${{ matrix.dir }}/junit.xml
 
-      - name: Publish contract test results
+      - name: Publish ${{ matrix.dir }} test results
         uses: dorny/test-reporter@v1
         if: success() || failure() # run this step even if previous step failed
         with:
