@@ -35,20 +35,24 @@ jobs:
         run: pnpm jest --ci --reporters=default --reporters=jest-junit
 
       - name: Publish contract test results
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure() # always run even if the previous step fails
+        uses: dorny/test-reporter@v1
+        if: success() || failure() # run this step even if previous step failed
         with:
-          report_paths: "contract/junit.xml"
+          name: Jest Tests # Name of the check run which will be created
+          path: contract/junit.xml # Path to test results
+          reporter: jest-junit # Format of test results
 
       - name: Test web
         working-directory: web
         run: pnpm vitest run --reporter=junit > junit.xml
 
       - name: Publish web test results
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure() # always run even if the previous step fails
+        uses: dorny/test-reporter@v1
+        if: success() || failure() # run this step even if previous step failed
         with:
-          report_paths: "web/junit.xml"
+          name: Vitest Tests # Name of the check run which will be created
+          path: web/junit.xml # Path to test results
+          reporter: jest-junit # Format of test results
 
   build:
     name: Build
@@ -67,7 +71,7 @@ jobs:
           version: 8
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
