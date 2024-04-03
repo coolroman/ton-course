@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20]
+        dir: [contract, web]
 
     steps:
       - name: Checkout repo
@@ -30,40 +31,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Test contract
-        working-directory: contract
-        run: pnpm jest --ci --reporters=default --reporters=jest-junit
+      - name: Test ${{ matrix.dir }}
+        working-directory: ${{ matrix.dir }}
+        run: pnpm test-ci
 
       - uses: actions/upload-artifact@v4 # upload test results
         if: success() || failure() # run this step even if previous step failed
         with:
-          name: contract-test-results
-          path: ./contract/junit.xml
+          name: ${{ matrix.dir }}-test-results
+          path: ./${{ matrix.dir }}/junit.xml
 
       - name: Publish contract test results
         uses: dorny/test-reporter@v1
         if: success() || failure() # run this step even if previous step failed
         with:
-          name: Jest Tests # Name of the check run which will be created
-          path: ./contract/junit.xml # Path to test results
-          reporter: jest-junit # Format of test results
-
-      - name: Test web
-        working-directory: web
-        run: pnpm vitest run --reporter=junit > junit.xml
-
-      - uses: actions/upload-artifact@v4 # upload test results
-        if: success() || failure() # run this step even if previous step failed
-        with:
-          name: web-test-results
-          path: ./web/junit.xml
-
-      - name: Publish web test results
-        uses: dorny/test-reporter@v1
-        if: success() || failure() # run this step even if previous step failed
-        with:
-          name: Vitest Tests # Name of the check run which will be created
-          path: ./web/junit.xml # Path to test results
+          name: Tests for "${{ matrix.dir }}" # Name of the check run which will be created
+          path: ./${{ matrix.dir }}/junit.xml # Path to test results
           reporter: jest-junit # Format of test results
 
   build:
