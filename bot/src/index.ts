@@ -1,6 +1,9 @@
-import { beginCell, toNano } from "@ton/core";
+import { getHttpEndpoint } from "@orbs-network/ton-access";
+import { Address, beginCell, fromNano, toNano } from "@ton/core";
+import { TonClient } from "@ton/ton";
 import { Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
+import { MainContract } from "../../common/contracts/MainContract";
 
 import dotenvFlow from "dotenv-flow";
 import qs from "qs";
@@ -13,7 +16,12 @@ const bot = new Telegraf(process.env.TG_BOT_TOKEN ?? "");
 bot.start((ctx) =>
   ctx.reply("Welcome to our counter app!", {
     reply_markup: {
-      keyboard: [["Increment by 5"], ["Deposit 1 TON"], ["Withdraw 0.7 TON"]],
+      keyboard: [
+        ["Increment by 5"],
+        ["Deposit 1 TON"],
+        ["Withdraw 0.7 TON"],
+        ["Get balance"],
+      ],
     },
   })
 );
@@ -83,6 +91,18 @@ bot.hears("Withdraw 0.7 TON", (ctx) => {
       inline_keyboard: [[{ text: "Sign transaction", url: link }]],
     },
   });
+});
+
+bot.hears("Get balance", async (ctx) => {
+  const client = new TonClient({
+    endpoint: await getHttpEndpoint({ network: "testnet" }),
+  });
+  const contract = new MainContract(
+    Address.parse(process.env.SC_ADDRESS!) // replace with your address from tutorial 2 step 8
+  );
+  const openedContract = client.open(contract);
+  const balance = await openedContract.getBalance();
+  ctx.reply(`Balance: ${fromNano(balance.balance)}`);
 });
 
 bot.on(message("web_app_data"), async (ctx) => {

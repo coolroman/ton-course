@@ -17,6 +17,12 @@ importers:
 
   bot:
     dependencies:
+      '@orbs-network/ton-access':
+        specifier: ^2.3.3
+        version: 2.3.3
+      '@ton/ton':
+        specifier: ^13.11.1
+        version: 13.11.1(@ton/core@0.56.3)(@ton/crypto@3.2.0)
       dotenv-flow:
         specifier: ^4.1.0
         version: 4.1.0
