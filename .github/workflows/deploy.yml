@@ -41,6 +41,7 @@ jobs:
         run: pnpm install
 
       - name: Build project
+        working-directory: web
         run: pnpm build
 
       - name: Upload production-ready build files
