@@ -8,7 +8,6 @@ import { MainContract } from "../../common/contracts/MainContract";
 describe("main.fc contract tests", () => {
   let blockchain: Blockchain;
   let myContract: SandboxContract<MainContract>;
-  let initWallet: SandboxContract<TreasuryContract>;
   let ownerWallet: SandboxContract<TreasuryContract>;
   let codeCell: Cell;
 
@@ -18,14 +17,13 @@ describe("main.fc contract tests", () => {
 
   beforeEach(async () => {
     blockchain = await Blockchain.create();
-    initWallet = await blockchain.treasury("initWallet");
     ownerWallet = await blockchain.treasury("ownerWallet");
 
     myContract = blockchain.openContract(
       MainContract.createFromConfig(
         {
           number: 1,
-          address: initWallet.address,
+          address: ownerWallet.address,
           owner_addres: ownerWallet.address,
         },
         codeCell
@@ -33,12 +31,37 @@ describe("main.fc contract tests", () => {
     );
   });
 
+  test("should deploy contract", async () => {
+    const senderWallet = await blockchain.treasury("sender");
+
+    const sentMessageResult = await myContract.sendDeploy(
+      senderWallet.getSender(),
+      toNano("5")
+    );
+
+    expect(sentMessageResult.transactions).toHaveTransaction({
+      from: senderWallet.address,
+      to: myContract.address,
+      success: false,
+    });
+  });
+
   test("should increment counter and get the most recent sender address", async () => {
     const senderWallet = await blockchain.treasury("sender");
 
+    const depositMessageResult = await myContract.sendDeposit(
+      senderWallet.getSender(),
+      toNano("3")
+    );
+
+    const balanceRequest1 = await myContract.getBalance();
+
+    expect(balanceRequest1.balance).toBeGreaterThan(toNano(2.99));
+    expect(balanceRequest1.balance).toBeLessThan(toNano(3));
+
     const sentMessageResult = await myContract.sendIncrement(
       senderWallet.getSender(),
-      toNano("0.05"),
+      toNano("5"),
       2
     );
 
@@ -52,6 +75,10 @@ describe("main.fc contract tests", () => {
 
     expect(data.recent_sender.toString()).toBe(senderWallet.address.toString());
     expect(data.number).toBe(3);
+
+    const balanceRequest = await myContract.getBalance();
+
+    expect(balanceRequest.balance).toEqual(balanceRequest1.balance);
   });
 
   it("successfully deposits funds", async () => {
