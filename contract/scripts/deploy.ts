@@ -3,8 +3,12 @@ import { toNano } from "@ton/core";
 import { MainContract } from "../../common/contracts/MainContract";
 
 export async function run(provider: NetworkProvider) {
-  const addr = provider.sender().address!; // address(get_owner(provider.network()));
-  console.log(`${provider.network()}: ${addr}`);
+  const addr = provider.sender().address!;
+
+  console.log(`Contract: ${process.env.SC_ADDRESS}`);
+  console.log(`Network:  ${provider.network()}`);
+  console.log(`Sender:   ${addr}`);
+
   const myContract = MainContract.createFromConfig(
     {
       number: 0,

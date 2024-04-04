@@ -1,12 +1,12 @@
 import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { Address, beginCell, fromNano, toNano } from "@ton/core";
 import { TonClient } from "@ton/ton";
+import qs from "qs";
 import { Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
 import { MainContract } from "../../common/contracts/MainContract";
 
 import dotenvFlow from "dotenv-flow";
-import qs from "qs";
 dotenvFlow.config({ debug: true });
 
 const TON_MAINNET = process.env.TON_NETWORK === "mainnet";
